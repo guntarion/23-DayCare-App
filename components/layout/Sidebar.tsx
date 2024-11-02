@@ -6,6 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Box,
+  Collapse,
 } from '@mui/material';
 import {
   CalendarToday,
@@ -13,8 +14,12 @@ import {
   Message,
   TrendingUp,
   Storage,
+  ExpandLess,
+  ExpandMore,
+  People,
 } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const menuItems = [
   {
@@ -40,7 +45,13 @@ const menuItems = [
   {
     text: 'Master Data',
     icon: <Storage />,
-    path: '/master-data',
+    subItems: [
+      {
+        text: 'Data Murid',
+        icon: <People />,
+        path: '/master-data/murid',
+      },
+    ],
   },
 ];
 
@@ -51,6 +62,11 @@ interface SidebarProps {
 export default function Sidebar({ open }: SidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const [masterDataOpen, setMasterDataOpen] = useState(true);
+
+  const handleMasterDataClick = () => {
+    setMasterDataOpen(!masterDataOpen);
+  };
 
   return (
     <Drawer
@@ -70,15 +86,45 @@ export default function Sidebar({ open }: SidebarProps) {
       <Box sx={{ overflow: 'auto' }}>
         <List>
           {menuItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton
-                selected={pathname === item.path}
-                onClick={() => router.push(item.path)}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
+            <Box key={item.text}>
+              {item.subItems ? (
+                <>
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={handleMasterDataClick}>
+                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                      {masterDataOpen ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                  </ListItem>
+                  <Collapse in={masterDataOpen} timeout='auto' unmountOnExit>
+                    <List component='div' disablePadding>
+                      {item.subItems.map((subItem) => (
+                        <ListItem key={subItem.text} disablePadding>
+                          <ListItemButton
+                            selected={pathname === subItem.path}
+                            onClick={() => router.push(subItem.path)}
+                            sx={{ pl: 4 }}
+                          >
+                            <ListItemIcon>{subItem.icon}</ListItemIcon>
+                            <ListItemText primary={subItem.text} />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Collapse>
+                </>
+              ) : (
+                <ListItem disablePadding>
+                  <ListItemButton
+                    selected={pathname === item.path}
+                    onClick={() => router.push(item.path)}
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              )}
+            </Box>
           ))}
         </List>
       </Box>
