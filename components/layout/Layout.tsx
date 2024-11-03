@@ -27,7 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' noWrap component='div'>
-            Daycare Management System
+            Daycare Al Muhajirin Management System
           </Typography>
         </Toolbar>
       </AppBar>
