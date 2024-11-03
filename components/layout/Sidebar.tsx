@@ -17,6 +17,7 @@ import {
   ExpandLess,
   ExpandMore,
   People,
+  Event,
 } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -41,6 +42,11 @@ const menuItems = [
     text: 'Tracking Milestone',
     icon: <TrendingUp />,
     path: '/milestone-tracking',
+  },
+  {
+    text: 'Agenda Kegiatan',
+    icon: <Event />,
+    path: '/activity-agenda',
   },
   {
     text: 'Master Data',
