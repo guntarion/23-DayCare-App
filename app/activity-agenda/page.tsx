@@ -86,7 +86,7 @@ export default function AgendaKegiatanPage() {
       0
     ).getDate();
 
-    // Create array for calendar dates
+    // Create array for calendar dates (6 rows x 7 columns)
     const calendarDays = Array(42)
       .fill(null)
       .map((_, index) => {
@@ -94,18 +94,25 @@ export default function AgendaKegiatanPage() {
         return dayNumber > 0 && dayNumber <= daysInMonth ? dayNumber : null;
       });
 
+    // Split calendar days into weeks
+    const weeks = [];
+    for (let i = 0; i < calendarDays.length; i += 7) {
+      weeks.push(calendarDays.slice(i, i + 7));
+    }
+
     return (
       <Card>
         <CardContent>
           {/* Days of week header */}
-          <Grid container spacing={1} sx={{ mb: 1 }}>
+          <Grid container>
             {days.map((day) => (
-              <Grid item xs key={day}>
+              <Grid item xs key={day} sx={{ width: `${100 / 7}%` }}>
                 <Paper
                   sx={{
                     p: 1,
                     textAlign: 'center',
                     bgcolor: 'grey.100',
+                    mx: 0.5,
                   }}
                 >
                   <Typography variant='subtitle2'>{day}</Typography>
@@ -115,48 +122,53 @@ export default function AgendaKegiatanPage() {
           </Grid>
 
           {/* Calendar grid */}
-          <Grid container spacing={1}>
-            {calendarDays.map((day, i) => (
-              <Grid item xs key={i}>
-                <Paper
-                  sx={{
-                    p: 1,
-                    minHeight: 100,
-                    '&:hover': { bgcolor: 'grey.50' },
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  {day !== null && (
-                    <>
-                      <Typography
-                        variant='caption'
-                        sx={{ alignSelf: 'flex-end', mb: 1 }}
-                      >
-                        {day}
-                      </Typography>
-                      {day === 15 && (
-                        <Stack spacing={0.5}>
-                          <Chip
-                            label='09:00 - Penimbangan'
-                            size='small'
-                            color='primary'
-                            sx={{ fontSize: '0.75rem' }}
-                          />
-                          <Chip
-                            label='10:00 - Bermain Sensorik'
-                            size='small'
-                            color='success'
-                            sx={{ fontSize: '0.75rem' }}
-                          />
-                        </Stack>
+          <Box sx={{ mt: 1 }}>
+            {weeks.map((week, weekIndex) => (
+              <Grid container key={weekIndex}>
+                {week.map((day, dayIndex) => (
+                  <Grid item xs key={dayIndex} sx={{ width: `${100 / 7}%` }}>
+                    <Paper
+                      sx={{
+                        p: 1,
+                        m: 0.5,
+                        minHeight: 100,
+                        '&:hover': { bgcolor: 'grey.50' },
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }}
+                    >
+                      {day !== null && (
+                        <>
+                          <Typography
+                            variant='caption'
+                            sx={{ alignSelf: 'flex-end', mb: 1 }}
+                          >
+                            {day}
+                          </Typography>
+                          {day === 15 && (
+                            <Stack spacing={0.5}>
+                              <Chip
+                                label='09:00 - Penimbangan'
+                                size='small'
+                                color='primary'
+                                sx={{ fontSize: '0.75rem' }}
+                              />
+                              <Chip
+                                label='10:00 - Bermain Sensorik'
+                                size='small'
+                                color='success'
+                                sx={{ fontSize: '0.75rem' }}
+                              />
+                            </Stack>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </Paper>
+                    </Paper>
+                  </Grid>
+                ))}
               </Grid>
             ))}
-          </Grid>
+          </Box>
         </CardContent>
       </Card>
     );
@@ -274,7 +286,7 @@ export default function AgendaKegiatanPage() {
               label='Kelompok Usia'
               onChange={(e) => setSelectedKelompok(e.target.value)}
             >
-              {kelompokUsia.map((kelompok) => (
+              {kelompokUsia.map((kelompok: string) => (
                 <MenuItem key={kelompok} value={kelompok}>
                   {kelompok}
                 </MenuItem>
