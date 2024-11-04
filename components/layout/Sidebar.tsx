@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import {
   CalendarToday,
+  Dashboard,
   Warning,
   Message,
   TrendingUp,
@@ -23,6 +24,11 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const menuItems = [
+  {
+    text: 'Dashboard',
+    icon: <Dashboard />,
+    path: '/dashboard',
+  },
   {
     text: 'Laporan Harian',
     icon: <CalendarToday />,
