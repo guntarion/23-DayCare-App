@@ -21,6 +21,7 @@ import {
   Event,
   AttachEmail,
   Leaderboard,
+  Queue,
 } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -50,6 +51,11 @@ const menuItems = [
     text: 'Leaderboards',
     icon: <Leaderboard />,
     path: '/leaderboards',
+  },
+  {
+    text: 'Capaian',
+    icon: <Queue />,
+    path: '/parent-dashboard/achievements',
   },
   {
     text: 'Laporan Insiden',
