@@ -20,6 +20,7 @@ import {
   People,
   Event,
   AttachEmail,
+  Leaderboard,
 } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -44,6 +45,11 @@ const menuItems = [
     text: 'Tracking Milestone',
     icon: <TrendingUp />,
     path: '/milestone-tracking',
+  },
+  {
+    text: 'Leaderboards',
+    icon: <Leaderboard />,
+    path: '/leaderboards',
   },
   {
     text: 'Laporan Insiden',
