@@ -19,6 +19,7 @@ import {
   ExpandMore,
   People,
   Event,
+  AttachEmail,
 } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -30,9 +31,19 @@ const menuItems = [
     path: '/dashboard',
   },
   {
+    text: 'Agenda Kegiatan',
+    icon: <Event />,
+    path: '/activity-agenda',
+  },
+  {
     text: 'Laporan Harian',
     icon: <CalendarToday />,
     path: '/daily-report',
+  },
+  {
+    text: 'Tracking Milestone',
+    icon: <TrendingUp />,
+    path: '/milestone-tracking',
   },
   {
     text: 'Laporan Insiden',
@@ -41,18 +52,14 @@ const menuItems = [
   },
   {
     text: 'Log Komunikasi',
-    icon: <Message />,
+    icon: <AttachEmail />,
     path: '/communication-log',
   },
+
   {
-    text: 'Tracking Milestone',
-    icon: <TrendingUp />,
-    path: '/milestone-tracking',
-  },
-  {
-    text: 'Agenda Kegiatan',
-    icon: <Event />,
-    path: '/activity-agenda',
+    text: 'Pesan WA',
+    icon: <Message />,
+    path: '/messages',
   },
   {
     text: 'Master Data',
